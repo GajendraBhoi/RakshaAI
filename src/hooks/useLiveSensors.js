@@ -272,6 +272,18 @@ export function useLiveSensors() {
     }
   }, [])
 
+  useEffect(() => {
+    window.__pumpReportState = {
+      sensors: sensorDefinitions.map((sensor) => sensors[sensor.id]),
+      vibrationAnalysis: sensors._vibrationAnalysis || {},
+      healthIndex,
+      maintenanceState,
+      isMonitoring,
+      currentIndex,
+      totalRows,
+    }
+  }, [sensors, healthIndex, maintenanceState, isMonitoring, currentIndex, totalRows])
+
   return {
     sensors: sensorDefinitions.map((sensor) => sensors[sensor.id]),
     sensorMap: sensors,
