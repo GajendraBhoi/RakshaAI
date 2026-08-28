@@ -103,6 +103,7 @@ export function useLiveSensors() {
   const [isComplete, setIsComplete] = useState(false)
   const [maintenanceState, setMaintenanceState] = useState(MAINTENANCE_STATES.NORMAL)
   const [healthIndex, setHealthIndex] = useState(0)
+  const [healthHistory, setHealthHistory] = useState([])
   const [alarmHistory, setAlarmHistory] = useState([])
   const intervalRef = useRef(null)
   const indexRef = useRef(0)
@@ -128,6 +129,7 @@ export function useLiveSensors() {
     warningAlarmedRef.current = false
     criticalAlarmedRef.current = false
     setHealthIndex(0)
+    setHealthHistory([])
     setAlarmHistory([])
     setMaintenanceState(MAINTENANCE_STATES.NORMAL)
   }, [])
@@ -178,6 +180,7 @@ export function useLiveSensors() {
 
     previousHealthIndexRef.current = nextHealthIndex
     setHealthIndex(nextHealthIndex)
+    setHealthHistory((current) => [...current, { timestamp: updatedAt, value: nextHealthIndex * 100 }].slice(-60))
 
     if (warningCrossed) {
       warningAlarmedRef.current = true
@@ -290,6 +293,7 @@ export function useLiveSensors() {
     connectedCount: sensorDefinitions.length,
     vibrationAnalysis: sensors._vibrationAnalysis || {},
     healthIndex,
+    healthHistory,
     maintenanceState,
     alarmHistory,
     isMonitoring,
