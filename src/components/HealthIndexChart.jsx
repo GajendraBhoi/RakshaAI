@@ -15,9 +15,9 @@ export default function HealthIndexChart({ history, healthIndex }) {
   const data = history.map((point) => ({ ...point, label: point.timestamp.getTime() }))
   const status = healthIndex >= 0.7 ? 'critical' : healthIndex >= 0.35 ? 'warning' : 'normal'
 
-  return <section className={`panel health-index-panel health-index-${status}`} aria-label="Pump P-104 Health Index trend">
+  return <section className={`panel health-index-panel health-index-${status}`} aria-label="Pump P-104 Risk Score trend">
     <div className="panel-heading">
-      <div><p className="eyebrow">Predict · aggregate signal</p><h2>Health Index</h2></div>
+      <div><p className="eyebrow">Predict · aggregate signal</p><h2>Risk Score</h2></div>
       <strong className="health-index-current">{Math.round(healthIndex * 100)}%</strong>
     </div>
     <div className="health-index-chart">
